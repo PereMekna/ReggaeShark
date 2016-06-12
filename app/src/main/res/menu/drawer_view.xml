@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_switch"
+            app:actionLayout="@layout/action_cheat_switch"
+            android:title="Mode triche" >
+        </item>
+
+        <item android:title="Sub menu">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:icon="@drawable/ic_delete_black_24dp"
+                        android:title="Effacer l'historique" />
+                    <item
+                        android:icon="@drawable/ic_perm_device_information_black_24dp"
+                        android:title="Signaler un bug" />
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>
