@@ -2,7 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/play"
+            android:icon="@drawable/ic_thumbs_up_down_black_24dp"
+            android:title="Jouer" />
+        <item
+            android:id="@+id/history"
+            android:icon="@drawable/ic_access_time_black_24dp"
+            android:title="Historique"/>
         <item android:id="@+id/nav_switch"
+            android:icon="@drawable/ic_android_black_24dp"
             app:actionLayout="@layout/action_cheat_switch"
             android:title="Mode triche" >
         </item>
@@ -11,8 +20,9 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
+                        android:id="@+id/delete"
                         android:icon="@drawable/ic_delete_black_24dp"
-                        android:title="Effacer l'historique" />
+                        android:title="Effacer l'historique"/>
                     <item
                         android:icon="@drawable/ic_perm_device_information_black_24dp"
                         android:title="Signaler un bug" />

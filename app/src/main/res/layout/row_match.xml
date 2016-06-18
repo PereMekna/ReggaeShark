@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/resPlayer"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        tools:background="#AAA"
+        android:layout_margin="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/resComput"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        tools:background="#AAA"
+        android:layout_toRightOf="@id/resPlayer"
+        />
+
+    <TextView
+        android:id="@+id/namePlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/resComput"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        tools:text="Nom Prénom"
+        />
+
+</RelativeLayout>

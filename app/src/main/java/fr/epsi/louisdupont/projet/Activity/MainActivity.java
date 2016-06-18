@@ -1,5 +1,6 @@
 package fr.epsi.louisdupont.projet.Activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,7 +10,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import fr.epsi.louisdupont.projet.Adapter.MatchAdapter;
+import fr.epsi.louisdupont.projet.DAO.MatchDAO;
 import fr.epsi.louisdupont.projet.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,14 +22,25 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    ListView mListView;
+    private MatchDAO matchDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        matchDAO = new MatchDAO(getApplicationContext());
+
+        mListView = (ListView) findViewById(R.id.listView);
+        matchDAO.open();
+
+        MatchAdapter adapter = new MatchAdapter(MainActivity.this, matchDAO.getAllMatch());
+        mListView.setAdapter(adapter);
+
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Historique");
         setSupportActionBar(toolbar);
 
         // Find our drawer view
@@ -45,11 +61,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        matchDAO.close();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.play:
+                Intent i = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(i);
+                Toast.makeText(getApplicationContext(), "PLAY", Toast.LENGTH_SHORT);
+                return true;
+            case R.id.delete:
+                matchDAO.drop();
+                mListView = (ListView) findViewById(R.id.listView);
+                MatchAdapter adapter = new MatchAdapter(MainActivity.this, matchDAO.getAllMatch());
+                mListView.setAdapter(adapter);
                 return true;
         }
 

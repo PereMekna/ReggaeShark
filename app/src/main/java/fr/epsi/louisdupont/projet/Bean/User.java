@@ -1,4 +1,4 @@
-package Bean;
+package fr.epsi.louisdupont.projet.Bean;
 
 /**
  * Created by Loulou on 10/06/2016.
