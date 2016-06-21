@@ -57,7 +57,9 @@ public class GameController {
         m.setNamePlayer("Dupont Louis");
         m.setResComput(computChoice.getCarColor());
         m.setResPlayer(player.getCarColor());
+        matchDAO.open();
         matchDAO.add(m);
+        matchDAO.close();
 
     }
 

@@ -37,7 +37,7 @@ public class MatchDAO extends DAO {
     }
 
     public void drop() {
-        mDb.rawQuery("DELETE FROM " + TABLE_MATCH, null);
+        mDb.delete(TABLE_MATCH, null, null);
     }
 
     public void add(Match m) {
