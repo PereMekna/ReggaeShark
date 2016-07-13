@@ -4,14 +4,15 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import fr.epsi.louisdupont.projet.Adapter.MatchAdapter;
 import fr.epsi.louisdupont.projet.DAO.MatchDAO;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private GameFragment gameFragment;
     private HistoryFragment historyFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         historyFragment = new HistoryFragment();
         gameFragment = new GameFragment();
+
 
 
         // Set a Toolbar to replace the ActionBar.
@@ -54,22 +57,27 @@ public class MainActivity extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
+        Menu menu = nvDrawer.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.nav_switch);
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameFragment.setCheat(!gameFragment.isCheat());
+            }
+        });
+
         matchDAO = new MatchDAO(getApplicationContext());
         startHistoryFragment();
 
     }
 
     private void startHistoryFragment() {
-        mListView = (ListView) findViewById(R.id.listView);
+        mListView = (ListView) findViewById(android.R.id.list);
         matchDAO.open();
 
         MatchAdapter adapter = new MatchAdapter(MainActivity.this, matchDAO.getAllMatch());
         mListView.setAdapter(adapter);
-    }
-
-    private void startGameFragment() {
-        gc = new GameController(getApplicationContext());
-        gc.newRandomCar();
     }
 
     public void onCarClick(View view) {
@@ -108,22 +116,26 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch(menuItem.getItemId()) {
             case R.id.play:
+                toolbar.setTitle("Jeu");
                 fragmentManager.beginTransaction().replace(R.id.flContent, gameFragment).commit();
+                menuItem.setChecked(true);
                 break;
             case R.id.history:
+                toolbar.setTitle("Historique");
                 fragmentManager.beginTransaction().replace(R.id.flContent, historyFragment).commit();
+                menuItem.setChecked(true);
                 break;
             case R.id.delete:
                 matchDAO.drop();
                 historyFragment.updateListView();
                 break;
             default:
-                fragmentManager.beginTransaction().replace(R.id.flContent, historyFragment).commit();
+                break;
         }
 
 
         // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
+
         // Set action bar title
         setTitle(menuItem.getTitle());
         // Close the navigation drawer

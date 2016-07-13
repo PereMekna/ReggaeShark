@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(User... users) {
             InputStream in = null;
+            user = users[0];
             try {
                 url = new URL("http://solebain.fr/epsi/tourolf/Connexion/?nom=" + users[0].getName() + "&prenom=" + users[0].getFirstName());
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

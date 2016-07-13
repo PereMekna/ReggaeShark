@@ -5,8 +5,17 @@
     android:id="@+id/historyLayout">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@android:id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true" />
+        android:clickable="true"
+        android:drawSelectorOnTop="false"/>
+
+    <TextView android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:text="Historique vide..."/>
 </RelativeLayout>

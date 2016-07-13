@@ -1,6 +1,7 @@
 package fr.epsi.louisdupont.projet.Adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,53 @@ public class MatchAdapter extends ArrayAdapter<Match> {
             case Blue: viewHolder.resComput.setImageResource(R.drawable.blue_car); break;
             case Green: viewHolder.resComput.setImageResource(R.drawable.green_car); break;
             case Red: viewHolder.resComput.setImageResource(R.drawable.red_car); break;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            viewHolder.resPlayer.setBackground(getContext().getResources().getDrawable(R.drawable.border_grey));
+            viewHolder.resComput.setBackground(getContext().getResources().getDrawable(R.drawable.border_grey));
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            switch (match.getResComput()) {
+                case Blue:
+                    switch (match.getResPlayer()) {
+                        case Blue:
+                            break;
+                        case Green:
+                            viewHolder.resPlayer.setBackground(getContext().getResources().getDrawable(R.drawable.border_red));
+                            break;
+                        case Red:
+                            viewHolder.resComput.setBackground(getContext().getResources().getDrawable(R.drawable.border_red));
+                            break;
+                    }
+                    break;
+                case Green:
+                    switch (match.getResPlayer()) {
+                        case Blue:
+                            viewHolder.resComput.setBackground(getContext().getResources().getDrawable(R.drawable.border_red));
+                            break;
+                        case Green:
+                            break;
+                        case Red:
+                            viewHolder.resPlayer.setBackground(getContext().getResources().getDrawable(R.drawable.border_red));
+                            break;
+                    }
+                    break;
+                case Red:
+                    switch (match.getResPlayer()) {
+                        case Blue:
+                            viewHolder.resPlayer.setBackground(getContext().getResources().getDrawable(R.drawable.border_red));
+                            break;
+                        case Green:
+                            viewHolder.resComput.setBackground(getContext().getResources().getDrawable(R.drawable.border_red));
+                            break;
+                        case Red:
+                            break;
+                    }
+                    break;
+            }
         }
 
         return convertView;

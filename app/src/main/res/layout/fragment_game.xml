@@ -3,6 +3,12 @@
     android:layout_height="match_parent"
     android:id="@+id/gameLayout">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cheat"
+        android:layout_below="@id/imgComput"/>
+
     <ImageView
         android:id="@+id/imgComput"
         android:layout_width="150dp"

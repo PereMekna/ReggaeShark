@@ -12,14 +12,25 @@ import fr.epsi.louisdupont.projet.Utils.CarColor;
  */
 public class GameController {
     private int nbTour, scorePlayer, scoreComputer;
-    Car computChoice;
-    MatchDAO matchDAO;
+    private Car computChoice;
+    private MatchDAO matchDAO;
+
+    public String getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    private String currentPlayer;
 
     public GameController(Context context) {
         scoreComputer = 0;
         scorePlayer = 0;
         nbTour = 0;
         matchDAO = new MatchDAO(context);
+        currentPlayer = "default";
     }
 
     public void newRandomCar() {
@@ -54,7 +65,7 @@ public class GameController {
         }
 
         Match m = new Match();
-        m.setNamePlayer("Dupont Louis");
+        m.setNamePlayer("test");
         m.setResComput(computChoice.getCarColor());
         m.setResPlayer(player.getCarColor());
         matchDAO.open();

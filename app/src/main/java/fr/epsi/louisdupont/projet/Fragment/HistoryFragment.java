@@ -12,8 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.List;
 
 import fr.epsi.louisdupont.projet.Adapter.MatchAdapter;
+import fr.epsi.louisdupont.projet.Bean.Match;
 import fr.epsi.louisdupont.projet.DAO.MatchDAO;
 import fr.epsi.louisdupont.projet.Game.GameController;
 import fr.epsi.louisdupont.projet.R;
@@ -48,16 +52,23 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        mListView = (ListView) getView().findViewById(R.id.listView);
+        mListView = (ListView) getView().findViewById(android.R.id.list);
         matchDAO.open();
-
-        MatchAdapter adapter = new MatchAdapter(getActivity(), matchDAO.getAllMatch());
+        List<Match> matchList = matchDAO.getAllMatch();
+        MatchAdapter adapter = new MatchAdapter(getActivity(), matchList);
         mListView.setAdapter(adapter);
+        TextView emptyText = (TextView)getActivity().findViewById(android.R.id.empty);
+        mListView.setEmptyView(emptyText);
     }
 
     public void updateListView() {
-        MatchAdapter adapter = new MatchAdapter(getActivity(), matchDAO.getAllMatch());
-        mListView.setAdapter(adapter);
+        if (matchDAO != null && getActivity() != null) {
+            matchDAO.open();
+            MatchAdapter adapter = new MatchAdapter(getActivity(), matchDAO.getAllMatch());
+            mListView.setAdapter(adapter);
+            TextView emptyText = (TextView)getActivity().findViewById(android.R.id.empty);
+            mListView.setEmptyView(emptyText);
+        }
     }
 
     @Override

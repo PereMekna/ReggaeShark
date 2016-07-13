@@ -34,6 +34,32 @@ public class GameFragment extends Fragment {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private GameController gc;
+    private boolean cheat;
+
+    public boolean isCheat() {
+        return cheat;
+    }
+
+    public void setCheat(boolean cheat) {
+        this.cheat = cheat;
+
+        ImageView imgComput = (ImageView) getView().findViewById(R.id.imgComput);
+        if (cheat) {
+            switch (gc.getComputChoice().getCarColor()) {
+                case Blue:
+                    imgComput.setImageResource(R.drawable.blue_car);
+                    break;
+                case Green:
+                    imgComput.setImageResource(R.drawable.green_car);
+                    break;
+                case Red:
+                    imgComput.setImageResource(R.drawable.red_car);
+                    break;
+            }
+            TextView cheatText = (TextView) getView().findViewById(R.id.cheat);
+            cheatText.setText("cheat");
+        }
+    }
 
 
     public GameFragment() {
@@ -73,11 +99,12 @@ public class GameFragment extends Fragment {
         TextView scorePlayer = (TextView) getView().findViewById(R.id.scorePlayer);
         TextView scoreComputer = (TextView) getView().findViewById(R.id.scoreComputer);
         Car c = new Car();
-
-        switch (gc.getComputChoice().getCarColor()) {
-            case Blue: imgComput.setImageResource(R.drawable.blue_car); break;
-            case Green: imgComput.setImageResource(R.drawable.green_car); break;
-            case Red: imgComput.setImageResource(R.drawable.red_car); break;
+        if (!cheat) {
+            switch (gc.getComputChoice().getCarColor()) {
+                case Blue: imgComput.setImageResource(R.drawable.blue_car); break;
+                case Green: imgComput.setImageResource(R.drawable.green_car); break;
+                case Red: imgComput.setImageResource(R.drawable.red_car); break;
+            }
         }
 
         switch (view.getId()) {
@@ -90,6 +117,14 @@ public class GameFragment extends Fragment {
         scorePlayer.setText("Joueur : " + gc.getScorePlayer());
         scoreComputer.setText("Ordi : " + gc.getScoreComputer());
         gc.newRandomCar();
+
+        if (cheat) {
+            switch (gc.getComputChoice().getCarColor()) {
+                case Blue: imgComput.setImageResource(R.drawable.blue_car); break;
+                case Green: imgComput.setImageResource(R.drawable.green_car); break;
+                case Red: imgComput.setImageResource(R.drawable.red_car); break;
+            }
+        }
 
         final ImageView imageView = (ImageView) view;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
